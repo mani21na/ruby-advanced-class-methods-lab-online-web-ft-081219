@@ -15,6 +15,7 @@ class Song
   def self.create
     song = self.new
     self.all << song
+#inspite of above, using song.save
     song
   end
   
@@ -33,10 +34,10 @@ class Song
   def self.find_by_name(title)
     result = self.all.find {|song| song.name == title}
     result
-#    binding.pry
   end
   
   def self.find_or_create_by_name(title)
+#self.find_by_name(song_name) || self.create_by_name(song_name)
     if !self.find_by_name(title)  
       self.create_by_name(title)
     end
@@ -45,12 +46,12 @@ class Song
   
   def self.alphabetical
     self.all.sort_by{|x| x.name}
-    #binding.pry
   end
   
   def self.new_from_filename(file_name)
     file_array = file_name.split(" - ")
     file_array[1] = file_array[1].chomp(".mp3")
+
 #I should think about more
     song = self.new
     song.artist_name = file_array[0]
@@ -61,6 +62,7 @@ class Song
  def self.create_from_filename(file_name)
     file_array = file_name.split(" - ")
     file_array[1] = file_array[1].chomp(".mp3")
+
     song = self.create
     song.artist_name = file_array[0]
     song.name = file_array[1]
